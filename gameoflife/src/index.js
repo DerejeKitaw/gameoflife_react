@@ -6,9 +6,34 @@ import './index.css';
 class Grid extends React.Component{
     // all components should have a render method
     render(){
+        const width =this.props.cols *14;
+        var rowsArr =[];
+
+        var boxClass = "";
+for (var i=0; i< this.props.rows; i++){
+    for (var j =0; j< this.props.cols; j++){
+        let boxId = i + "_" + j;
+
+        boxClass = this.props.gridFull[i][j] ? "box on" : "box off";
+
+        rowsArr.push(
+            <Box 
+            boxClass = {boxClass}
+            key={boxId}
+            boxId={boxId}
+            row={i}
+            col={j}
+            selectBox={this.props.selectBox}
+            />
+        )
+    }
+}
+
        // rendere method need to return an element
        return (
-           <div>Grid</div>
+            <div className="grid" style={{width: width}}>
+            {{rowsArr}}
+           </div>
        ) 
     }
 }
@@ -18,8 +43,15 @@ class Main extends React.Component {
 
     constructor(){
         super();
+        // speed , rows and columns will be refernced in the state. So created outside state
+        this.speed=100;
+        this.rows=30;
+        this.cols=50; // columns
+
         this.state={
             generation:0,
+            // create a grid rows x by cols and turn off initialy
+            gridFull: Array(this.ros).fill().map(() => Array(this.cols).fill(false))
         }
     }
     // all components should have a render method
@@ -27,7 +59,13 @@ class Main extends React.Component {
         // rendere method need to return an element
         return (<div>
             <h1>The Game of life</h1>
-            <Grid />
+            
+            <Grid 
+                gridFull={this.state.gridFull}
+                rows={this.rows}
+                cols={this.cols}
+                selectBox={this.selectBox}
+            />
             <h2>Generation: {this.state.generation}</h2>
 
         </div>
