@@ -23,7 +23,7 @@ class Box extends React.Component{
 class Grid extends React.Component{
     // all components should have a render method
     render(){
-        const width = (this.props.cols * 14);
+        const width = (this.props.cols * 16) +1;
 		var rowsArr = [];
 
 		var boxClass = "";
@@ -71,7 +71,18 @@ class Main extends React.Component {
             gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
         }
     }
+    // create selectBox method
 
+    selectBox = (row, col) => {
+        // in react it is a best practice to copy the array to modify state. Do not update state directly
+        let gridCopy = arrayClone(this.state.gridFull);
+
+        // already deep copy is in outside function
+        gridCopy[row][col] = !gridCopy[row][col];
+        this.setState({
+            gridFull: gridCopy
+        })
+    }
     
     // all components should have a render method
     render() {
@@ -91,6 +102,11 @@ class Main extends React.Component {
         </div>
         );
     }
+}
+
+// deep clone of the array
+function arrayClone (arr){
+    return JSON.parse(JSON.stringify(arr));
 }
 
 ReactDOM.render(<Main />, document.getElementById('root'));
