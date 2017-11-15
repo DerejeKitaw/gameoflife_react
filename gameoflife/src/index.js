@@ -39,7 +39,7 @@ class Grid extends React.Component{
 						boxId={boxId}
 						row={i}
 						col={j}
-						//selectBox={this.props.selectBox}
+						selectBox={this.props.selectBox}
 					/>
 				);
 			}
@@ -81,7 +81,7 @@ class Main extends React.Component {
         gridCopy[row][col] = !gridCopy[row][col];
         this.setState({
             gridFull: gridCopy
-        })
+        });
     }
     
     // all components should have a render method
@@ -95,7 +95,7 @@ class Main extends React.Component {
                 gridFull={this.state.gridFull}
                 rows={this.rows}
                 cols={this.cols}
-                //selectBox={this.selectBox}
+                selectBox={this.selectBox}
             />
             <h2>Generation: {this.state.generation}</h2>
 
